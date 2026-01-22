@@ -12,10 +12,11 @@ export default async function BillingPage() {
     .order("created_at", { ascending: false });
 
   const activeSubscriptions = subscriptions?.filter(s => s.status === "active") || [];
+  const premiumCount = activeSubscriptions.filter(s => s.plan_type === "premium").length;
   const proCount = activeSubscriptions.filter(s => s.plan_type === "pro").length;
   const enterpriseCount = activeSubscriptions.filter(s => s.plan_type === "enterprise").length;
   
-  const monthlyRevenue = (proCount * 9) + (enterpriseCount * 29);
+  const monthlyRevenue = (premiumCount * 1.99).toFixed(2);
 
   return (
     <div className="p-8">
@@ -53,26 +54,26 @@ export default async function BillingPage() {
         <Card className="bg-card border-border">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground">
-              Pro Plans
+              Premium Subscribers
             </CardTitle>
             <Users className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{proCount}</div>
-            <p className="text-xs text-muted-foreground mt-1">${proCount * 9}/mo</p>
+            <div className="text-2xl font-bold">{premiumCount}</div>
+            <p className="text-xs text-muted-foreground mt-1">${(premiumCount * 1.99).toFixed(2)}/mo</p>
           </CardContent>
         </Card>
 
         <Card className="bg-card border-border">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground">
-              Enterprise Plans
+              Avg. Revenue Per User
             </CardTitle>
             <TrendingUp className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{enterpriseCount}</div>
-            <p className="text-xs text-muted-foreground mt-1">${enterpriseCount * 29}/mo</p>
+            <div className="text-2xl font-bold">$1.99</div>
+            <p className="text-xs text-muted-foreground mt-1">per month</p>
           </CardContent>
         </Card>
       </div>
@@ -104,7 +105,7 @@ export default async function BillingPage() {
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="text-sm font-medium">
-                    ${sub.plan_type === "pro" ? 9 : 29}/mo
+                    ${sub.plan_type === "premium" ? "1.99" : "0.00"}/mo
                   </span>
                   <Badge
                     variant={sub.status === "active" ? "default" : "secondary"}

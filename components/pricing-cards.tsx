@@ -1,10 +1,10 @@
 "use client";
 
+import { useState } from "react"
+
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Check, Zap } from "lucide-react";
-import { createCheckoutSession } from "@/app/actions/stripe";
-import { useState } from "react";
 
 const plans = [
   {
@@ -20,54 +20,30 @@ const plans = [
     popular: false,
   },
   {
-    name: "Pro",
-    price: 9,
-    priceId: "price_pro_monthly",
-    description: "For AI enthusiasts and professionals",
+    name: "Premium",
+    price: 1.99,
+    description: "Unlock all premium features",
     features: [
       "All free features",
       "Unlimited premium articles",
       "Early access to content",
       "Ad-free experience",
-      "Exclusive AI tools & resources",
+      "Sentiment analysis dashboard",
     ],
-    cta: "Start Free Trial",
+    cta: "Subscribe Now",
     popular: true,
-  },
-  {
-    name: "Enterprise",
-    price: 29,
-    priceId: "price_enterprise_monthly",
-    description: "For teams and organizations",
-    features: [
-      "All Pro features",
-      "Team access (up to 10 users)",
-      "Priority support",
-      "Custom AI integrations",
-      "API access",
-      "White-label options",
-    ],
-    cta: "Contact Sales",
-    popular: false,
   },
 ];
 
 export function PricingCards() {
-  const [loading, setLoading] = useState<string | null>(null);
-
-  const handleSubscribe = async (plan: typeof plans[0]) => {
+  const handleSubscribe = (plan: typeof plans[0]) => {
     if (plan.price === 0) {
       window.location.href = "/auth/signup";
       return;
     }
     
-    setLoading(plan.name);
-    try {
-      await createCheckoutSession(plan.priceId!, plan.name);
-    } catch (error) {
-      console.error("Error creating checkout session:", error);
-      setLoading(null);
-    }
+    // Navigate to payment page for premium
+    window.location.href = "/payment";
   };
 
   return (
@@ -117,9 +93,8 @@ export function PricingCards() {
               }`}
               variant={plan.popular ? "default" : "outline"}
               onClick={() => handleSubscribe(plan)}
-              disabled={loading === plan.name}
             >
-              {loading === plan.name ? "Loading..." : plan.cta}
+              {plan.cta}
             </Button>
           </CardContent>
         </Card>

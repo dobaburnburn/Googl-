@@ -26,10 +26,10 @@ export default function SubscribePage() {
             
             <div className="mt-16 text-center">
               <p className="text-muted-foreground text-sm">
-                All plans include a 7-day free trial. Cancel anytime.
+                Simple monthly subscription. Cancel anytime.
               </p>
               <p className="text-muted-foreground text-xs mt-2">
-                Secure payments powered by Stripe
+                Secure payments powered by Square
               </p>
             </div>
           </div>

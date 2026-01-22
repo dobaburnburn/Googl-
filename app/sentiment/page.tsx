@@ -1,6 +1,6 @@
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
-import { SentimentDashboard } from "@/components/sentiment-dashboard";
+import { SentimentDashboardMVP } from "@/components/sentiment-dashboard-mvp";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -16,11 +16,11 @@ export const metadata: Metadata = {
 
 export default function SentimentPage() {
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="flex min-h-screen flex-col bg-background">
       <Header />
       <main className="flex-1">
-        <div className="container mx-auto px-4 py-12">
-          <SentimentDashboard />
+        <div className="container mx-auto px-4 py-8 max-w-6xl">
+          <SentimentDashboardMVP />
         </div>
       </main>
       <Footer />
